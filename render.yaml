@@ -1,0 +1,31 @@
+services:
+  - type: web
+    name: hoja-de-vida
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: >
+      pip install -r requirements.txt &&
+      cd mi_proyecto &&
+      python manage.py collectstatic --noinput &&
+      python manage.py migrate
+    startCommand: cd mi_proyecto && gunicorn mi_proyecto.wsgi:application --workers 1 --timeout 60
+    envVars:
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        scope: runtime
+        value: ${RENDER_EXTERNAL_URL}
+      - key: SECRET_KEY
+        scope: runtime
+        value: ${SECRET_KEY}
+      - key: DATABASE_URL
+        scope: runtime
+        value: ${DATABASE_URL}
+
+  - type: pserv
+    name: hoja-de-vida-db
+    env: postgres
+    region: oregon
+    plan: free
+    ipAllowList: []

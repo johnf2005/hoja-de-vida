@@ -45,7 +45,3 @@ db.sqlite3
 # OS
 .DS_Store
 Thumbs.db
-
-# Render/Deployment
-Procfile
-Procfile.bak

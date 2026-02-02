@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import (
     DatosPersonales, ExperienciaLaboral, Reconocimiento, 
-    CursoRealizado, ProductoAcademico, ProductoLaboral, VentaGarage
+    CursoRealizado, ProductoAcademico, ProductoLaboral, VentaGarage,
+    Documento
 )
 
 
@@ -121,4 +122,24 @@ class VentaGarageAdmin(admin.ModelAdmin):
     search_fields = ('nombreproducto',)
     list_filter = ('estadoproducto', 'activarparaqueseveaenfront')
     readonly_fields = ('idventagarage',)
+
+
+@admin.register(Documento)
+class DocumentoAdmin(admin.ModelAdmin):
+    list_display = ('titulo', 'idperfilconqueestaactivo', 'activarparaqueseveaenfront', 'orden')
+    list_editable = ('activarparaqueseveaenfront', 'orden')
+    search_fields = ('titulo', 'contenido')
+    list_filter = ('activarparaqueseveaenfront',)
+    readonly_fields = ('iddocumento',)
+    fieldsets = (
+        ('Información', {
+            'fields': ('iddocumento', 'idperfilconqueestaactivo', 'titulo', 'slug')
+        }),
+        ('Contenido', {
+            'fields': ('contenido',)
+        }),
+        ('Visibilidad', {
+            'fields': ('activarparaqueseveaenfront', 'orden')
+        }),
+    )
 

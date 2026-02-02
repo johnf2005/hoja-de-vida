@@ -255,3 +255,33 @@ class VentaGarage(models.Model):
 
     def __str__(self):
         return f"{self.nombreproducto} - {self.estadoproducto}"
+
+
+#BD tabla documentos (visibles en el menú)
+class Documento(models.Model):
+    iddocumento = models.AutoField(primary_key=True)
+
+    idperfilconqueestaactivo = models.ForeignKey(
+        DatosPersonales,
+        on_delete=models.CASCADE,
+        db_column='idperfilconqueestaactivo'
+    )
+
+    titulo = models.CharField(max_length=150)
+    slug = models.SlugField(max_length=160, unique=True)
+    contenido = models.TextField(blank=True)
+    fechacreacion = models.DateField(auto_now_add=True)
+    activarparaqueseveaenfront = models.BooleanField(default=True, verbose_name="Activar para que se vea en front")
+    orden = models.IntegerField(default=0)
+
+    class Meta:
+        db_table = 'documentos'
+        ordering = ['orden', '-fechacreacion']
+
+    def __str__(self):
+        return self.titulo
+
+    def clean(self):
+        # simple validation: slug must not be empty
+        if not self.slug:
+            raise ValidationError('El slug no puede ser vacío.')

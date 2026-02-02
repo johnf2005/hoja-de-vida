@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from portfolio.models import DatosPersonales, ExperienciaLaboral, CursoRealizado
+from portfolio.models import DatosPersonales, ExperienciaLaboral, CursoRealizado, Documento
 
 
 def index(request):
@@ -27,10 +27,17 @@ def index(request):
         activarparaqueseveaenfront=True
     ).order_by('-fechafin', '-fechainicio')
 
+    # Obtener documentos visibles (para menú)
+    documentos = Documento.objects.filter(
+        idperfilconqueestaactivo=perfil,
+        activarparaqueseveaenfront=True
+    ).order_by('orden')
+
     datos = {
         'perfil': perfil,
         'experiencia': experiencia,
         'cursos': cursos,
+        'documentos': documentos,
     }
 
     return render(request, 'index.html', {'datos': datos})

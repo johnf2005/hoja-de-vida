@@ -23,6 +23,16 @@
             {% if datos.cursos %}
             <li class="nav-item"><a class="nav-link" href="#cursos">Cursos</a></li>
             {% endif %}
+            {% if datos.documentos %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="docsDropdown" role="button" data-bs-toggle="dropdown">Documentos</a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="docsDropdown">
+                {% for doc in datos.documentos %}
+                  <li><a class="dropdown-item" href="#doc-{{ doc.slug }}">{{ doc.titulo }}</a></li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endif %}
             <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
             <li class="nav-item"><a class="nav-link" href="/admin/" target="_blank">Administrador</a></li>
           </ul>
@@ -71,6 +81,22 @@
           </li>
           {% endfor %}
         </ul>
+      </section>
+      {% endif %}
+
+      {% if datos.documentos %}
+      <section id="documentos" class="mb-4">
+        <h2 class="h5">Documentos</h2>
+        <div>
+          {% for doc in datos.documentos %}
+          <article id="doc-{{ doc.slug }}" class="mb-3 card">
+            <div class="card-body">
+              <h5 class="card-title">{{ doc.titulo }}</h5>
+              <div class="card-text">{{ doc.contenido|linebreaks }}</div>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
       </section>
       {% endif %}
 

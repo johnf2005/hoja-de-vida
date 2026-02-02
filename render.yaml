@@ -9,9 +9,9 @@ services:
       cd mi_proyecto &&
       python check_db.py &&
       python manage.py migrate --noinput --verbosity 3 &&
-      python create_superuser.py &&
+      python manage.py create_admin &&
       python manage.py collectstatic --noinput
-    startCommand: bash -lc "cd mi_proyecto && python check_db.py && python manage.py migrate --noinput --verbosity 3 && python create_superuser.py && gunicorn app:app --workers 1 --timeout 60"
+    startCommand: bash -lc "cd mi_proyecto && python check_db.py && python manage.py migrate --noinput --verbosity 3 && python manage.py create_admin && gunicorn app:app --workers 1 --timeout 60"
     envVars:
       - key: DEBUG
         value: "False"

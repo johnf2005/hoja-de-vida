@@ -118,9 +118,12 @@
         <ul class="list-group">
           {% for producto in datos.productos_academicos %}
           <li class="list-group-item">
-            <strong>{{ producto.nombreproducto }}</strong>
-            {% if producto.descripcionproducto %}
-            <div class="small mt-1">{{ producto.descripcionproducto }}</div>
+            <strong>{{ producto.nombrerecurso }}</strong>
+            {% if producto.clasificador %}
+            <span class="badge bg-info">{{ producto.clasificador }}</span>
+            {% endif %}
+            {% if producto.descripcion %}
+            <div class="small mt-1">{{ producto.descripcion }}</div>
             {% endif %}
           </li>
           {% endfor %}
@@ -135,8 +138,9 @@
           {% for producto in datos.productos_laborales %}
           <li class="list-group-item">
             <strong>{{ producto.nombreproducto }}</strong>
-            {% if producto.descripcionproducto %}
-            <div class="small mt-1">{{ producto.descripcionproducto }}</div>
+            <span class="text-muted">({{ producto.fechaproducto|date:"d M Y" }})</span>
+            {% if producto.descripcion %}
+            <div class="small mt-1">{{ producto.descripcion }}</div>
             {% endif %}
           </li>
           {% endfor %}
@@ -151,7 +155,7 @@
           {% for reconocimiento in datos.reconocimientos %}
           <li class="list-group-item">
             <strong>{{ reconocimiento.nombrereconocimiento }}</strong>
-            <span class="badge bg-info">{{ reconocimiento.tipodelreconocimiento }}</span>
+            <span class="badge bg-success">{{ reconocimiento.tipodelreconocimiento }}</span>
             <span class="text-muted">({{ reconocimiento.fechareconocimiento|date:"d M Y" }})</span>
             {% if reconocimiento.descripcionreconocimiento %}
             <div class="small mt-1">{{ reconocimiento.descripcionreconocimiento }}</div>
@@ -169,12 +173,12 @@
           {% for venta in datos.ventas_garage %}
           <li class="list-group-item">
             <strong>{{ venta.nombreproducto }}</strong>
-            <span class="badge bg-secondary">{{ venta.estadodelproducto }}</span>
-            {% if venta.preciodelproducto %}
-            <span class="text-success"><strong>${{ venta.preciodelproducto }}</strong></span>
+            <span class="badge bg-secondary">{{ venta.estadoproducto }}</span>
+            {% if venta.valordelbien %}
+            <span class="text-success"><strong>${{ venta.valordelbien }}</strong></span>
             {% endif %}
-            {% if venta.descripciondelproducto %}
-            <div class="small mt-1">{{ venta.descripciondelproducto }}</div>
+            {% if venta.descripcion %}
+            <div class="small mt-1">{{ venta.descripcion }}</div>
             {% endif %}
           </li>
           {% endfor %}

@@ -40,13 +40,13 @@ def index(request):
         # Obtener productos académicos visibles
         productos_academicos = ProductoAcademico.objects.filter(
             activarparaqueseveaenfront=True
-        ).order_by('-fechacreacion')
+        ).order_by('nombrerecurso')
 
         # Obtener productos laborales visibles
         productos_laborales = ProductoLaboral.objects.filter(
             idperfilconqueestaactivo=perfil,
             activarparaqueseveaenfront=True
-        ).order_by('-fechacreacion')
+        ).order_by('-fechaproducto')
 
         # Obtener reconocimientos visibles
         reconocimientos = Reconocimiento.objects.filter(
@@ -57,7 +57,7 @@ def index(request):
         # Obtener ventas garage visibles
         ventas_garage = VentaGarage.objects.filter(
             activarparaqueseveaenfront=True
-        ).order_by('-fechacreacion')
+        ).order_by('nombreproducto')
 
     except (OperationalError, DatabaseError):
         # DB not ready / migrations missing: render page layout without DB data

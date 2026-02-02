@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ resume.name }} - Hoja de Vida</title>
+  <link rel="stylesheet" href="{% static 'portfolio/style.css' %}">
+</head>
+<body>
+  <nav class="topnav">
+    <div class="brand">{{ resume.name }}</div>
+    <ul class="menu">
+      <li><a href="#about">Acerca</a></li>
+      <li><a href="#education">Educación</a></li>
+      <li><a href="#experience">Experiencia</a></li>
+      <li><a href="#skills">Habilidades</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+</body>
+</html>

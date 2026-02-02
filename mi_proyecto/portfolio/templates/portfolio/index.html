@@ -1,0 +1,47 @@
+{% extends 'portfolio/base.html' %}
+
+{% block content %}
+  <section id="about">
+    <h1>{{ resume.name }}</h1>
+    <h2>{{ resume.title }}</h2>
+    <p>{{ resume.summary }}</p>
+  </section>
+
+  <section id="education">
+    <h3>Educación</h3>
+    <ul>
+      {% for e in resume.education %}
+        <li><strong>{{ e.degree }}</strong>, {{ e.institution }} — {{ e.year }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section id="experience">
+    <h3>Experiencia</h3>
+    <ul>
+      {% for ex in resume.experience %}
+        <li>
+          <strong>{{ ex.role }}</strong> — {{ ex.company }} ({{ ex.period }})
+          <p>{{ ex.details }}</p>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section id="skills">
+    <h3>Habilidades</h3>
+    <ul class="skills">
+      {% for s in resume.skills %}
+        <li>{{ s }}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section id="contact">
+    <h3>Contacto</h3>
+    <p>Email: {{ resume.contact.email }}</p>
+    <p>Tel: {{ resume.contact.phone }}</p>
+    <p>Ubicación: {{ resume.contact.location }}</p>
+  </section>
+
+{% endblock %}

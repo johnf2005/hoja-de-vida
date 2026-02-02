@@ -180,7 +180,9 @@ class ProductoAcademico(models.Model):
     idperfilconqueestaactivo = models.ForeignKey(
         DatosPersonales,
         on_delete=models.CASCADE,
-        db_column='idperfilconqueestaactivo'
+        db_column='idperfilconqueestaactivo',
+        null=True,
+        blank=True
     )
 
     nombrerecurso = models.CharField(max_length=100)
@@ -229,7 +231,9 @@ class VentaGarage(models.Model):
     idperfilconqueestaactivo = models.ForeignKey(
         DatosPersonales,
         on_delete=models.CASCADE,
-        db_column='idperfilconqueestaactivo'
+        db_column='idperfilconqueestaactivo',
+        null=True,
+        blank=True
     )
 
     ESTADO_PRODUCTO_CHOICES = [

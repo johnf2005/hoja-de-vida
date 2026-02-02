@@ -18,10 +18,22 @@
           <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#perfil">Perfil</a></li>
             {% if datos.experiencia %}
-            <li class="nav-item"><a class="nav-link" href="#experiencia">Experiencia</a></li>
+            <li class="nav-item"><a class="nav-link" href="#experiencia">Experiencia Laboral</a></li>
             {% endif %}
             {% if datos.cursos %}
             <li class="nav-item"><a class="nav-link" href="#cursos">Cursos</a></li>
+            {% endif %}
+            {% if datos.productos_academicos %}
+            <li class="nav-item"><a class="nav-link" href="#productos-academicos">Productos Académicos</a></li>
+            {% endif %}
+            {% if datos.productos_laborales %}
+            <li class="nav-item"><a class="nav-link" href="#productos-laborales">Productos Laborales</a></li>
+            {% endif %}
+            {% if datos.reconocimientos %}
+            <li class="nav-item"><a class="nav-link" href="#reconocimientos">Reconocimientos</a></li>
+            {% endif %}
+            {% if datos.ventas_garage %}
+            <li class="nav-item"><a class="nav-link" href="#ventas-garage">Venta Garage</a></li>
             {% endif %}
             {% if datos.documentos %}
             <li class="nav-item dropdown">
@@ -97,6 +109,76 @@
           </article>
           {% endfor %}
         </div>
+      </section>
+      {% endif %}
+
+      {% if datos.productos_academicos %}
+      <section id="productos-academicos" class="mb-4">
+        <h2 class="h5">Productos Académicos</h2>
+        <ul class="list-group">
+          {% for producto in datos.productos_academicos %}
+          <li class="list-group-item">
+            <strong>{{ producto.nombreproducto }}</strong>
+            {% if producto.descripcionproducto %}
+            <div class="small mt-1">{{ producto.descripcionproducto }}</div>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      {% if datos.productos_laborales %}
+      <section id="productos-laborales" class="mb-4">
+        <h2 class="h5">Productos Laborales</h2>
+        <ul class="list-group">
+          {% for producto in datos.productos_laborales %}
+          <li class="list-group-item">
+            <strong>{{ producto.nombreproducto }}</strong>
+            {% if producto.descripcionproducto %}
+            <div class="small mt-1">{{ producto.descripcionproducto }}</div>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      {% if datos.reconocimientos %}
+      <section id="reconocimientos" class="mb-4">
+        <h2 class="h5">Reconocimientos</h2>
+        <ul class="list-group">
+          {% for reconocimiento in datos.reconocimientos %}
+          <li class="list-group-item">
+            <strong>{{ reconocimiento.nombrereconocimiento }}</strong>
+            <span class="badge bg-info">{{ reconocimiento.tipodelreconocimiento }}</span>
+            <span class="text-muted">({{ reconocimiento.fechareconocimiento|date:"d M Y" }})</span>
+            {% if reconocimiento.descripcionreconocimiento %}
+            <div class="small mt-1">{{ reconocimiento.descripcionreconocimiento }}</div>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
+      </section>
+      {% endif %}
+
+      {% if datos.ventas_garage %}
+      <section id="ventas-garage" class="mb-4">
+        <h2 class="h5">Venta Garage</h2>
+        <ul class="list-group">
+          {% for venta in datos.ventas_garage %}
+          <li class="list-group-item">
+            <strong>{{ venta.nombreproducto }}</strong>
+            <span class="badge bg-secondary">{{ venta.estadodelproducto }}</span>
+            {% if venta.preciodelproducto %}
+            <span class="text-success"><strong>${{ venta.preciodelproducto }}</strong></span>
+            {% endif %}
+            {% if venta.descripciondelproducto %}
+            <div class="small mt-1">{{ venta.descripciondelproducto }}</div>
+            {% endif %}
+          </li>
+          {% endfor %}
+        </ul>
       </section>
       {% endif %}
 

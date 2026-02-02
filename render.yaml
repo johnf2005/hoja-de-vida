@@ -15,6 +15,8 @@ services:
     envVars:
       - key: DEBUG
         value: "False"
+      - key: PYTHON_VERSION
+        value: "3.13.4"
       - key: ALLOWED_HOSTS
         scope: runtime
         value: ${RENDER_EXTERNAL_URL}

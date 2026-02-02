@@ -1,66 +1,124 @@
 from django.contrib import admin
-from .models import Perfil, Educacion, Experiencia, Habilidad
+from .models import (
+    DatosPersonales, ExperienciaLaboral, Reconocimiento, 
+    CursoRealizado, ProductoAcademico, ProductoLaboral, VentaGarage
+)
 
 
-@admin.register(Perfil)
-class PerfilAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'titulo', 'email', 'actualizado')
-    search_fields = ('nombre', 'email')
-    readonly_fields = ('creado', 'actualizado')
+@admin.register(DatosPersonales)
+class DatosPersonalesAdmin(admin.ModelAdmin):
+    list_display = ('nombres', 'apellidos', 'numerocedula', 'sexo', 'perfilactivo')
+    search_fields = ('nombres', 'apellidos', 'numerocedula', 'email')
+    list_filter = ('sexo', 'perfilactivo', 'estadocivil')
+    readonly_fields = ('idperfil',)
     fieldsets = (
         ('Información Básica', {
-            'fields': ('nombre', 'titulo', 'resumen')
+            'fields': ('idperfil', 'descripcionperfil', 'perfilactivo', 'nombres', 'apellidos')
+        }),
+        ('Datos Personales', {
+            'fields': ('nacionalidad', 'lugarnacimiento', 'fechanacimiento', 'numerocedula', 'sexo', 'estadocivil', 'licenciaconducir')
         }),
         ('Contacto', {
-            'fields': ('email', 'telefono', 'ubicacion')
+            'fields': ('telefonoconvencional', 'telefonofijo', 'direcciontrabajo', 'direcciondomiciliaria')
         }),
-        ('Multimedia', {
-            'fields': ('foto',)
-        }),
-        ('Auditoría', {
-            'fields': ('creado', 'actualizado'),
-            'classes': ('collapse',)
+        ('Web y Multimedia', {
+            'fields': ('sitioweb', 'foto_perfil')
         }),
     )
 
 
-@admin.register(Educacion)
-class EducacionAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'centro', 'anio_inicio', 'anio_fin', 'orden')
-    list_editable = ('orden',)
-    search_fields = ('titulo', 'centro')
-    list_filter = ('anio_inicio', 'anio_fin')
-    readonly_fields = ('creado',)
-
-
-@admin.register(Experiencia)
-class ExperienciaAdmin(admin.ModelAdmin):
-    list_display = ('cargo', 'empresa', 'fecha_inicio', 'fecha_fin', 'en_curso', 'orden')
-    list_editable = ('en_curso', 'orden')
-    search_fields = ('cargo', 'empresa')
-    list_filter = ('fecha_inicio', 'en_curso')
-    readonly_fields = ('creado',)
+@admin.register(ExperienciaLaboral)
+class ExperienciaLaboralAdmin(admin.ModelAdmin):
+    list_display = ('cargodesempenado', 'nombrempresa', 'fechainiciogestion', 'fechafingestion', 'activarparaqueseveaenfront')
+    list_editable = ('activarparaqueseveaenfront',)
+    search_fields = ('cargodesempenado', 'nombrempresa', 'emailempresa')
+    list_filter = ('fechainiciogestion', 'activarparaqueseveaenfront')
+    readonly_fields = ('idexperiencialaboral',)
     fieldsets = (
         ('Información Básica', {
-            'fields': ('cargo', 'empresa', 'descripcion')
+            'fields': ('idexperiencialaboral', 'idperfilconqueestaactivo', 'cargodesempenado', 'nombrempresa', 'lugarempresa')
         }),
-        ('Fechas', {
-            'fields': ('fecha_inicio', 'fecha_fin', 'en_curso')
+        ('Empresa', {
+            'fields': ('emailempresa', 'sitiowebempresa', 'nombrecontactoempresarial', 'telefonocontactoempresarial')
         }),
-        ('Orden', {
-            'fields': ('orden',)
+        ('Fechas y Descripción', {
+            'fields': ('fechainiciogestion', 'fechafingestion', 'descripcionfunciones')
         }),
-        ('Auditoría', {
-            'fields': ('creado',),
-            'classes': ('collapse',)
+        ('Visibilidad y Certificado', {
+            'fields': ('activarparaqueseveaenfront', 'rutacertificado')
         }),
     )
 
 
-@admin.register(Habilidad)
-class HabilidadAdmin(admin.ModelAdmin):
-    list_display = ('nombre', 'categoria', 'nivel', 'orden')
-    list_editable = ('nivel', 'orden')
-    list_filter = ('categoria',)
-    search_fields = ('nombre',)
-    ordering = ('orden',)
+@admin.register(Reconocimiento)
+class ReconocimientoAdmin(admin.ModelAdmin):
+    list_display = ('tiporeconocimiento', 'entidadpatrocinadora', 'fechareconocimiento', 'activarparaqueseveaenfront')
+    list_editable = ('activarparaqueseveaenfront',)
+    search_fields = ('descripcionreconocimiento', 'entidadpatrocinadora')
+    list_filter = ('tiporeconocimiento', 'fechareconocimiento', 'activarparaqueseveaenfront')
+    readonly_fields = ('idreconocimiento',)
+    fieldsets = (
+        ('Información Básica', {
+            'fields': ('idreconocimiento', 'idperfilconqueestaactivo', 'tiporeconocimiento', 'fechareconocimiento')
+        }),
+        ('Descripción', {
+            'fields': ('descripcionreconocimiento', 'entidadpatrocinadora')
+        }),
+        ('Contacto', {
+            'fields': ('nombrecontactoauspicia', 'telefonocontactoauspicia')
+        }),
+        ('Visibilidad y Certificado', {
+            'fields': ('activarparaqueseveaenfront', 'rutacertificado')
+        }),
+    )
+
+
+@admin.register(CursoRealizado)
+class CursoRealizadoAdmin(admin.ModelAdmin):
+    list_display = ('nombrecurso', 'entidadpatrocinadora', 'fechainicio', 'totalhoras', 'activarparaqueseveaenfront')
+    list_editable = ('activarparaqueseveaenfront',)
+    search_fields = ('nombrecurso', 'entidadpatrocinadora')
+    list_filter = ('fechainicio', 'activarparaqueseveaenfront')
+    readonly_fields = ('idcursorealizado',)
+    fieldsets = (
+        ('Información Básica', {
+            'fields': ('idcursorealizado', 'idperfilconqueestaactivo', 'nombrecurso', 'descripcioncurso')
+        }),
+        ('Fechas y Duración', {
+            'fields': ('fechainicio', 'fechafin', 'totalhoras')
+        }),
+        ('Entidad Patrocinadora', {
+            'fields': ('entidadpatrocinadora', 'nombrecontactoauspicia', 'telefonocontactoauspicia', 'emailempresapatrocinadora')
+        }),
+        ('Visibilidad y Certificado', {
+            'fields': ('activarparaqueseveaenfront', 'rutacertificado')
+        }),
+    )
+
+
+@admin.register(ProductoAcademico)
+class ProductoAcademicoAdmin(admin.ModelAdmin):
+    list_display = ('nombrerecurso', 'clasificador', 'activarparaqueseveaenfront')
+    list_editable = ('activarparaqueseveaenfront',)
+    search_fields = ('nombrerecurso', 'descripcion')
+    list_filter = ('activarparaqueseveaenfront',)
+    readonly_fields = ('idproductoacademico',)
+
+
+@admin.register(ProductoLaboral)
+class ProductoLaboralAdmin(admin.ModelAdmin):
+    list_display = ('nombreproducto', 'fechaproducto', 'activarparaqueseveaenfront')
+    list_editable = ('activarparaqueseveaenfront',)
+    search_fields = ('nombreproducto', 'descripcion')
+    list_filter = ('fechaproducto', 'activarparaqueseveaenfront')
+    readonly_fields = ('idproductoslaborales',)
+
+
+@admin.register(VentaGarage)
+class VentaGarageAdmin(admin.ModelAdmin):
+    list_display = ('nombreproducto', 'estadoproducto', 'valordelbien', 'activarparaqueseveaenfront')
+    list_editable = ('estadoproducto', 'activarparaqueseveaenfront')
+    search_fields = ('nombreproducto',)
+    list_filter = ('estadoproducto', 'activarparaqueseveaenfront')
+    readonly_fields = ('idventagarage',)
+

@@ -3,28 +3,25 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hoja de Vida - {% if datos.perfil.nombre %}{{ datos.perfil.nombre }}{% else %}Mi Hoja de Vida{% endif %}</title>
+    <title>Hoja de Vida - {% if datos.perfil %}{{ datos.perfil.nombres }} {{ datos.perfil.apellidos }}{% else %}Mi Hoja de Vida{% endif %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/css/style.css">
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">{% if datos.perfil.nombre %}{{ datos.perfil.nombre }}{% else %}Mi Hoja de Vida{% endif %}</a>
+        <a class="navbar-brand" href="#">{% if datos.perfil %}{{ datos.perfil.nombres }} {{ datos.perfil.apellidos }}{% else %}Mi Hoja de Vida{% endif %}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="#perfil">Perfil</a></li>
-            {% if datos.educacion %}
-            <li class="nav-item"><a class="nav-link" href="#educacion">Educación</a></li>
-            {% endif %}
             {% if datos.experiencia %}
             <li class="nav-item"><a class="nav-link" href="#experiencia">Experiencia</a></li>
             {% endif %}
-            {% if datos.habilidades %}
-            <li class="nav-item"><a class="nav-link" href="#habilidades">Habilidades</a></li>
+            {% if datos.cursos %}
+            <li class="nav-item"><a class="nav-link" href="#cursos">Cursos</a></li>
             {% endif %}
             <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
             <li class="nav-item"><a class="nav-link" href="/admin/" target="_blank">Administrador</a></li>
@@ -34,40 +31,24 @@
     </nav>
 
     <main class="container my-4">
+      {% if datos.perfil %}
       <section id="perfil" class="mb-4">
-        <h1 class="h3">{% if datos.perfil.titulo %}{{ datos.perfil.titulo }}{% else %}Mi Perfil Profesional{% endif %}</h1>
-        {% if datos.perfil.resumen %}
-        <p class="text-muted">{{ datos.perfil.resumen }}</p>
+        <h1 class="h3">{{ datos.perfil.nombres }} {{ datos.perfil.apellidos }}</h1>
+        {% if datos.perfil.descripcionperfil %}
+        <p class="text-muted">{{ datos.perfil.descripcionperfil }}</p>
         {% endif %}
       </section>
 
-      {% if datos.educacion %}
-      <section id="educacion" class="mb-4">
-        <h2 class="h5">Educación</h2>
-        <ul class="list-group">
-          {% for edu in datos.educacion %}
-          <li class="list-group-item">
-            <strong>{{ edu.titulo }}</strong> — {{ edu.centro }}
-            <span class="text-muted">({{ edu.anio_inicio }}{% if edu.anio_fin %} - {{ edu.anio_fin }}{% else %} - Actualidad{% endif %})</span>
-            {% if edu.descripcion %}
-            <div class="small mt-1">{{ edu.descripcion }}</div>
-            {% endif %}
-          </li>
-          {% endfor %}
-        </ul>
-      </section>
-      {% endif %}
-
       {% if datos.experiencia %}
       <section id="experiencia" class="mb-4">
-        <h2 class="h5">Experiencia</h2>
+        <h2 class="h5">Experiencia Laboral</h2>
         <ul class="list-group">
           {% for exp in datos.experiencia %}
           <li class="list-group-item">
-            <strong>{{ exp.cargo }}</strong> — {{ exp.empresa }}
-            <span class="text-muted">({{ exp.fecha_inicio|date:"M Y" }}{% if exp.en_curso %} - Actualidad{% elif exp.fecha_fin %} - {{ exp.fecha_fin|date:"M Y" }}{% endif %})</span>
-            {% if exp.descripcion %}
-            <div class="small mt-1">{{ exp.descripcion }}</div>
+            <strong>{{ exp.cargodesempenado }}</strong> — {{ exp.nombrempresa }} ({{ exp.lugarempresa }})
+            <span class="text-muted">({{ exp.fechainiciogestion|date:"d M Y" }}{% if exp.fechafingestion %} - {{ exp.fechafingestion|date:"d M Y" }}{% else %} - Actualidad{% endif %})</span>
+            {% if exp.descripcionfunciones %}
+            <div class="small mt-1">{{ exp.descripcionfunciones }}</div>
             {% endif %}
           </li>
           {% endfor %}
@@ -75,31 +56,51 @@
       </section>
       {% endif %}
 
-      {% if datos.habilidades %}
-      <section id="habilidades" class="mb-4">
-        <h2 class="h5">Habilidades</h2>
-        <div>
-          {% for h in datos.habilidades %}
-            <span class="badge bg-secondary me-1 mb-1">{{ h.nombre }}</span>
+      {% if datos.cursos %}
+      <section id="cursos" class="mb-4">
+        <h2 class="h5">Cursos Realizados</h2>
+        <ul class="list-group">
+          {% for curso in datos.cursos %}
+          <li class="list-group-item">
+            <strong>{{ curso.nombrecurso }}</strong> — {{ curso.entidadpatrocinadora }}
+            <span class="text-muted">({{ curso.totalhoras }} horas)</span>
+            <span class="text-muted">({{ curso.fechainicio|date:"d M Y" }}{% if curso.fechafin %} - {{ curso.fechafin|date:"d M Y" }}{% endif %})</span>
+            {% if curso.descripcioncurso %}
+            <div class="small mt-1">{{ curso.descripcioncurso }}</div>
+            {% endif %}
+          </li>
           {% endfor %}
-        </div>
+        </ul>
       </section>
       {% endif %}
 
       <section id="contacto" class="mb-4">
         <h2 class="h5">Contacto</h2>
         <ul class="list-unstyled">
-          {% if datos.perfil.email %}
-          <li><strong>Email:</strong> <a href="mailto:{{ datos.perfil.email }}">{{ datos.perfil.email }}</a></li>
+          {% if datos.perfil.sitioweb %}
+          <li><strong>Sitio Web:</strong> <a href="{{ datos.perfil.sitioweb }}" target="_blank">{{ datos.perfil.sitioweb }}</a></li>
           {% endif %}
-          {% if datos.perfil.telefono %}
-          <li><strong>Teléfono:</strong> {{ datos.perfil.telefono }}</li>
+          {% if datos.perfil.telefonoconvencional %}
+          <li><strong>Teléfono Convencional:</strong> {{ datos.perfil.telefonoconvencional }}</li>
           {% endif %}
-          {% if datos.perfil.ubicacion %}
-          <li><strong>Ubicación:</strong> {{ datos.perfil.ubicacion }}</li>
+          {% if datos.perfil.telefonofijo %}
+          <li><strong>Teléfono Fijo:</strong> {{ datos.perfil.telefonofijo }}</li>
+          {% endif %}
+          {% if datos.perfil.direcciontrabajo %}
+          <li><strong>Dirección Trabajo:</strong> {{ datos.perfil.direcciontrabajo }}</li>
+          {% endif %}
+          {% if datos.perfil.direcciondomiciliaria %}
+          <li><strong>Dirección Domiciliaria:</strong> {{ datos.perfil.direcciondomiciliaria }}</li>
           {% endif %}
         </ul>
       </section>
+
+      {% else %}
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">Bienvenido</h4>
+        <p>No hay datos de perfil configurados. Por favor, ingresa a <a href="/admin/">Administrador</a> para agregar tu información.</p>
+      </div>
+      {% endif %}
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

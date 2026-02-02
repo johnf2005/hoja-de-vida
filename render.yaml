@@ -20,8 +20,9 @@ services:
         scope: runtime
         value: ${SECRET_KEY}
       - key: DATABASE_URL
-        scope: runtime
-        value: ${DATABASE_URL}
+        fromDatabase:
+          name: hoja-de-vida-db
+          property: connectionString
 
   - type: pserv
     name: hoja-de-vida-db

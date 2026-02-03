@@ -269,14 +269,23 @@
         <ul class="list-group">
           {% for venta in datos.ventas_garage %}
           <li class="list-group-item">
-            <strong>{{ venta.nombreproducto }}</strong>
-            <span class="badge bg-secondary">{{ venta.estadoproducto }}</span>
-            {% if venta.valordelbien %}
-            <span class="text-success"><strong>${{ venta.valordelbien }}</strong></span>
-            {% endif %}
-            {% if venta.descripcion %}
-            <div class="small mt-1">{{ venta.descripcion }}</div>
-            {% endif %}
+            <div class="row">
+              <div class="col-md-8">
+                <strong>{{ venta.nombreproducto }}</strong>
+                <span class="badge bg-secondary">{{ venta.estadoproducto }}</span>
+                {% if venta.valordelbien %}
+                <span class="text-success"><strong>${{ venta.valordelbien }}</strong></span>
+                {% endif %}
+                {% if venta.descripcion %}
+                <div class="small mt-1">{{ venta.descripcion }}</div>
+                {% endif %}
+              </div>
+              {% if venta.imagen %}
+              <div class="col-md-4 text-end">
+                <img src="{{ venta.imagen.url }}" alt="{{ venta.nombreproducto }}" class="img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: cover;">
+              </div>
+              {% endif %}
+            </div>
           </li>
           {% endfor %}
         </ul>

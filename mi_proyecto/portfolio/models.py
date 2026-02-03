@@ -252,6 +252,8 @@ class VentaGarage(models.Model):
 
     valordelbien = models.DecimalField(max_digits=5, decimal_places=2)
 
+    imagen = models.ImageField(upload_to='ventas_garage/', blank=True, null=True)
+
     activarparaqueseveaenfront = models.BooleanField(default=True, verbose_name="Activar para que se vea en front")
 
     class Meta:

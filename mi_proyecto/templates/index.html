@@ -105,8 +105,16 @@
             {% endif %}
             {% if datos.documentos %}
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="printDocumentos" checked>
-              <label class="form-check-label" for="printDocumentos">Documentos</label>
+              <input class="form-check-input" type="checkbox" id="printDocumentos" checked onchange="toggleAllDocuments()">
+              <label class="form-check-label" for="printDocumentos"><strong>Documentos (Todos)</strong></label>
+            </div>
+            <div style="margin-left: 20px;">
+              {% for doc in datos.documentos %}
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="printDoc{{ forloop.counter }}" checked>
+                <label class="form-check-label" for="printDoc{{ forloop.counter }}">{{ doc.titulo }}</label>
+              </div>
+              {% endfor %}
             </div>
             {% endif %}
             <div class="form-check">
@@ -402,6 +410,14 @@
         printWindow.print();
       }
 
+      function toggleAllDocuments() {
+        const mainCheckbox = document.getElementById('printDocumentos');
+        const documentCheckboxes = document.querySelectorAll('input[id^="printDoc"]');
+        documentCheckboxes.forEach(checkbox => {
+          checkbox.checked = mainCheckbox.checked;
+        });
+      }
+
       function printFiltered() {
         const printWindow = window.open('', '_blank');
         const styles = `
@@ -430,13 +446,26 @@
         if (document.getElementById('printProductosLaborales')?.checked) sections.push('productos-laborales');
         if (document.getElementById('printReconocimientos')?.checked) sections.push('reconocimientos');
         if (document.getElementById('printVentasGarage')?.checked) sections.push('ventas-garage');
-        if (document.getElementById('printDocumentos')?.checked) sections.push('documentos');
         if (document.getElementById('printContacto').checked) sections.push('contacto');
         
         sections.forEach(sectionId => {
           const section = document.getElementById(sectionId);
           if (section) {
             printWindow.document.write(section.innerHTML);
+          }
+        });
+        
+        // Imprimir documentos individuales si hay alguno marcado
+        const documentCheckboxes = document.querySelectorAll('input[id^="printDoc"]');
+        let hasCheckedDocuments = false;
+        
+        documentCheckboxes.forEach((checkbox, index) => {
+          if (checkbox.checked) {
+            hasCheckedDocuments = true;
+            const articles = document.querySelectorAll('section#documentos article');
+            if (articles[index]) {
+              printWindow.document.write(articles[index].innerHTML);
+            }
           }
         });
         

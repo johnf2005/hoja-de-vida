@@ -4,6 +4,10 @@ services:
     env: python
     region: oregon
     plan: free
+    disks:
+      - name: media
+        mountPath: /var/data/media
+        sizeGB: 1
     buildCommand: >
       pip install -r requirements.txt &&
       cd mi_proyecto &&
@@ -15,6 +19,8 @@ services:
     envVars:
       - key: DEBUG
         value: "False"
+      - key: MEDIA_ROOT
+        value: /var/data/media
       - key: PYTHON_VERSION
         value: "3.13.4"
       - key: ALLOWED_HOSTS

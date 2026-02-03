@@ -46,7 +46,7 @@ class ExperienciaLaboralAdmin(admin.ModelAdmin):
             'fields': ('fechainiciogestion', 'fechafingestion', 'descripcionfunciones', 'imagen')
         }),
         ('Visibilidad y Certificado', {
-            'fields': ('activarparaqueseveaenfront', 'rutacertificado', 'certificado_archivo')
+            'fields': ('activarparaqueseveaenfront', 'rutacertificado')
         }),
     )
 

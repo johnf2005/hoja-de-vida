@@ -134,14 +134,101 @@
       {% if datos.perfil %}
       <section id="perfil" class="mb-4 section-print">
         <div class="d-flex justify-content-between align-items-center mb-3">
-          <h1 class="h3 m-0">{{ datos.perfil.nombres }} {{ datos.perfil.apellidos }}</h1>
+          <div class="d-flex align-items-center gap-3">
+            {% if datos.perfil.foto_perfil %}
+            <img src="{{ datos.perfil.foto_perfil.url }}" alt="{{ datos.perfil.nombres }} {{ datos.perfil.apellidos }}" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover; border: 4px solid #6c757d;">
+            {% else %}
+            <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center" style="width: 120px; height: 120px; border: 4px solid #6c757d;">
+              <span class="text-white fs-1">{{ datos.perfil.nombres.0 }}{{ datos.perfil.apellidos.0 }}</span>
+            </div>
+            {% endif %}
+            <h1 class="h3 m-0">{{ datos.perfil.nombres }} {{ datos.perfil.apellidos }}</h1>
+          </div>
           <button class="btn btn-sm btn-outline-primary" onclick="printSection('perfil')" title="Imprimir esta sección">
             <i class="bi bi-printer"></i> Imprimir
           </button>
         </div>
+        
         {% if datos.perfil.descripcionperfil %}
-        <p class="text-muted">{{ datos.perfil.descripcionperfil }}</p>
+        <div class="card border-primary mb-3">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Acerca de mí</h5>
+            <p class="card-text">{{ datos.perfil.descripcionperfil }}</p>
+          </div>
+        </div>
         {% endif %}
+        
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Información Personal</h5>
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <div class="mb-2">
+                  <small class="text-muted">Apellidos</small>
+                  <div><strong>{{ datos.perfil.apellidos }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Lugar Nacimiento</small>
+                  <div><strong>{{ datos.perfil.lugarnacimiento|default:"N/A" }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Sexo</small>
+                  <div><strong>{{ datos.perfil.get_sexo_display|default:"N/A" }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Teléfono</small>
+                  <div><strong>{{ datos.perfil.telefonoconvencional|default:"N/A" }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Dirección domiciliaria</small>
+                  <div><strong>{{ datos.perfil.direcciondomiciliaria|default:"N/A" }}</strong></div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="mb-2">
+                  <small class="text-muted">Nombres</small>
+                  <div><strong>{{ datos.perfil.nombres }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Fecha Nacimiento</small>
+                  <div><strong>{{ datos.perfil.fechanacimiento|date:"F j, Y"|default:"N/A" }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Estado Civil</small>
+                  <div><strong>{{ datos.perfil.estadocivil|default:"N/A" }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Correo</small>
+                  <div><strong>{{ datos.perfil.correoelectronico|default:"N/A" }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Sitio web</small>
+                  <div>
+                    {% if datos.perfil.sitioweb %}
+                    <a href="{{ datos.perfil.sitioweb }}" target="_blank"><strong>{{ datos.perfil.sitioweb }}</strong></a>
+                    {% else %}
+                    <strong>N/A</strong>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="mb-2">
+                  <small class="text-muted">Nacionalidad</small>
+                  <div><strong>{{ datos.perfil.nacionalidad|default:"N/A" }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Cédula</small>
+                  <div><strong>{{ datos.perfil.numerocedula|default:"N/A" }}</strong></div>
+                </div>
+                <div class="mb-2">
+                  <small class="text-muted">Licencia</small>
+                  <div><strong>{{ datos.perfil.licenciaconducir|default:"No" }}</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {% if datos.experiencia %}

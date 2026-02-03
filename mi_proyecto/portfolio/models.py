@@ -43,6 +43,7 @@ class DatosPersonales(models.Model):
     direcciontrabajo = models.CharField(max_length=50, blank=True, null=True)
     direcciondomiciliaria = models.CharField(max_length=50, blank=True, null=True)
 
+    correoelectronico = models.EmailField(max_length=100, blank=True, null=True)
     sitioweb = models.CharField(max_length=60, blank=True, null=True)
     foto_perfil = models.ImageField(upload_to='fotos_perfil/', blank=True, null=True)
 

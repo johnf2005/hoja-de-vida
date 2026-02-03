@@ -114,10 +114,12 @@ class Reconocimiento(models.Model):
         ('Privado', 'Privado'),
     ]
 
+    tituloreconocimiento = models.CharField(max_length=150)
     tiporeconocimiento = models.CharField(
         max_length=100,
         choices=TIPO_RECONOCIMIENTO_CHOICES
     )
+    tituloreconocimiento = models.CharField(max_length=150, blank=True, null=True)
     fechareconocimiento = models.DateField()
     descripcionreconocimiento = models.CharField(max_length=100)
     entidadpatrocinadora = models.CharField(max_length=100)
@@ -125,6 +127,7 @@ class Reconocimiento(models.Model):
     telefonocontactoauspicia = models.CharField(max_length=60, blank=True, null=True)
     activarparaqueseveaenfront = models.BooleanField(default=True, verbose_name="Activar para que se vea en front")
     rutacertificado = models.CharField(max_length=100, blank=True, null=True)
+    certificado_archivo = models.FileField(upload_to='certificados_reconocimientos/', blank=True, null=True)
 
     class Meta:
         db_table = 'reconocimientos'

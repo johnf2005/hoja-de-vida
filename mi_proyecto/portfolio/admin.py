@@ -53,14 +53,14 @@ class ExperienciaLaboralAdmin(admin.ModelAdmin):
 
 @admin.register(Reconocimiento)
 class ReconocimientoAdmin(admin.ModelAdmin):
-    list_display = ('tiporeconocimiento', 'entidadpatrocinadora', 'fechareconocimiento', 'activarparaqueseveaenfront')
+    list_display = ('tituloreconocimiento', 'tiporeconocimiento', 'entidadpatrocinadora', 'fechareconocimiento', 'activarparaqueseveaenfront')
     list_editable = ('activarparaqueseveaenfront',)
-    search_fields = ('descripcionreconocimiento', 'entidadpatrocinadora')
+    search_fields = ('tituloreconocimiento', 'descripcionreconocimiento', 'entidadpatrocinadora')
     list_filter = ('tiporeconocimiento', 'fechareconocimiento', 'activarparaqueseveaenfront')
     readonly_fields = ('idreconocimiento',)
     fieldsets = (
         ('Información Básica', {
-            'fields': ('idreconocimiento', 'idperfilconqueestaactivo', 'tiporeconocimiento', 'fechareconocimiento')
+            'fields': ('idreconocimiento', 'idperfilconqueestaactivo', 'tituloreconocimiento', 'tiporeconocimiento', 'fechareconocimiento')
         }),
         ('Descripción', {
             'fields': ('descripcionreconocimiento', 'entidadpatrocinadora')
@@ -69,7 +69,7 @@ class ReconocimientoAdmin(admin.ModelAdmin):
             'fields': ('nombrecontactoauspicia', 'telefonocontactoauspicia')
         }),
         ('Visibilidad y Certificado', {
-            'fields': ('activarparaqueseveaenfront', 'rutacertificado')
+            'fields': ('activarparaqueseveaenfront', 'rutacertificado', 'certificado_archivo')
         }),
     )
 
@@ -92,7 +92,7 @@ class CursoRealizadoAdmin(admin.ModelAdmin):
             'fields': ('entidadpatrocinadora', 'nombrecontactoauspicia', 'telefonocontactoauspicia', 'emailempresapatrocinadora')
         }),
         ('Visibilidad y Certificado', {
-            'fields': ('activarparaqueseveaenfront', 'rutacertificado')
+            'fields': ('activarparaqueseveaenfront', 'rutacertificado', 'certificado_archivo')
         }),
     )
 

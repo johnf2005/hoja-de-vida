@@ -43,10 +43,10 @@ class ExperienciaLaboralAdmin(admin.ModelAdmin):
             'fields': ('emailempresa', 'sitiowebempresa', 'nombrecontactoempresarial', 'telefonocontactoempresarial')
         }),
         ('Fechas y Descripción', {
-            'fields': ('fechainiciogestion', 'fechafingestion', 'descripcionfunciones')
+            'fields': ('fechainiciogestion', 'fechafingestion', 'descripcionfunciones', 'imagen')
         }),
         ('Visibilidad y Certificado', {
-            'fields': ('activarparaqueseveaenfront', 'rutacertificado')
+            'fields': ('activarparaqueseveaenfront', 'rutacertificado', 'certificado_archivo')
         }),
     )
 

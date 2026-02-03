@@ -78,6 +78,7 @@ class ExperienciaLaboral(models.Model):
     fechainiciogestion = models.DateField()
     fechafingestion = models.DateField(blank=True, null=True)
     descripcionfunciones = models.CharField(max_length=100)
+    imagen = models.ImageField(upload_to='experiencia_laboral/', blank=True, null=True)
     activarparaqueseveaenfront = models.BooleanField(default=True, verbose_name="Activar para que se vea en front")
     rutacertificado = models.CharField(max_length=100, blank=True, null=True)
 
@@ -157,6 +158,7 @@ class CursoRealizado(models.Model):
     emailempresapatrocinadora = models.CharField(max_length=60, blank=True, null=True)
     activarparaqueseveaenfront = models.BooleanField(default=True, verbose_name="Activar para que se vea en front")
     rutacertificado = models.CharField(max_length=100, blank=True, null=True)
+    certificado_archivo = models.FileField(upload_to='certificados_cursos/', blank=True, null=True)
 
     class Meta:
         db_table = 'cursosrealizados'

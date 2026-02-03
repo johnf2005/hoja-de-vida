@@ -242,11 +242,20 @@
         <ul class="list-group">
           {% for exp in datos.experiencia %}
           <li class="list-group-item">
-            <strong>{{ exp.cargodesempenado }}</strong> — {{ exp.nombrempresa }} ({{ exp.lugarempresa }})
-            <span class="text-muted">({{ exp.fechainiciogestion|date:"d M Y" }}{% if exp.fechafingestion %} - {{ exp.fechafingestion|date:"d M Y" }}{% else %} - Actualidad{% endif %})</span>
-            {% if exp.descripcionfunciones %}
-            <div class="small mt-1">{{ exp.descripcionfunciones }}</div>
-            {% endif %}
+            <div class="row">
+              <div class="col-md-8">
+                <strong>{{ exp.cargodesempenado }}</strong> — {{ exp.nombrempresa }} ({{ exp.lugarempresa }})
+                <span class="text-muted">({{ exp.fechainiciogestion|date:"d M Y" }}{% if exp.fechafingestion %} - {{ exp.fechafingestion|date:"d M Y" }}{% else %} - Actualidad{% endif %})</span>
+                {% if exp.descripcionfunciones %}
+                <div class="small mt-1">{{ exp.descripcionfunciones }}</div>
+                {% endif %}
+              </div>
+              {% if exp.imagen %}
+              <div class="col-md-4 text-end">
+                <img src="{{ exp.imagen.url }}" alt="{{ exp.cargodesempenado }}" class="img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: cover;">
+              </div>
+              {% endif %}
+            </div>
           </li>
           {% endfor %}
         </ul>
@@ -269,6 +278,19 @@
             <span class="text-muted">({{ curso.fechainicio|date:"d M Y" }}{% if curso.fechafin %} - {{ curso.fechafin|date:"d M Y" }}{% endif %})</span>
             {% if curso.descripcioncurso %}
             <div class="small mt-1">{{ curso.descripcioncurso }}</div>
+            {% endif %}
+            {% if curso.certificado_archivo or curso.rutacertificado %}
+            <div class="mt-2">
+              {% if curso.certificado_archivo %}
+              <a class="btn btn-sm btn-outline-primary" href="{{ curso.certificado_archivo.url }}" target="_blank" rel="noopener">
+                Ver certificado
+              </a>
+              {% else %}
+              <a class="btn btn-sm btn-outline-success" href="{{ curso.rutacertificado }}" target="_blank" rel="noopener">
+                Ver certificado
+              </a>
+              {% endif %}
+            </div>
             {% endif %}
           </li>
           {% endfor %}
